@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Doctor Appointment</title>
   <style>
-    /* Responsive CSS Styling */
+    /* General reset and font styling */
     * {
       margin: 0;
       padding: 0;
@@ -18,8 +18,11 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
     }
 
+    /* Header section */
     header {
       display: none; /* Hide header */
     }
@@ -30,12 +33,13 @@
       object-fit: cover;
     }
 
+    /* Appointment form styles */
     .appointment-form {
       margin: 2rem auto;
       padding: 2rem;
       background: white;
-      max-width: 90%;
-      width: 500px;
+      max-width: 500px;
+      width: 90%;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
     }
@@ -43,6 +47,7 @@
     .appointment-form h2 {
       margin-bottom: 1rem;
       text-align: center;
+      color: #333;
     }
 
     .form-group {
@@ -52,7 +57,7 @@
     .form-group label {
       display: block;
       margin-bottom: 0.5rem;
-      color: #333;
+      color: #555;
     }
 
     .form-group input {
@@ -60,6 +65,7 @@
       padding: 0.75rem;
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 1rem;
     }
 
     .form-group input[type="submit"] {
@@ -67,6 +73,7 @@
       color: white;
       border: none;
       cursor: pointer;
+      font-size: 1rem;
       transition: background-color 0.3s;
     }
 
@@ -74,6 +81,13 @@
       background-color: #0056b3;
     }
 
+    #message {
+      color: red;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Footer styling */
     footer {
       background: linear-gradient(90deg, #ff6f61, #ff7f50, #ff6347, #ff4500, #ff1493);
       color: white;
@@ -92,6 +106,7 @@
       overflow: hidden;
       justify-content: center;
       padding: 1rem;
+      font-size: 1rem;
     }
 
     .slider-text div {
@@ -108,7 +123,7 @@
       }
     }
 
-    /* Responsive Design */
+    /* Responsive design */
     @media (max-width: 600px) {
       .appointment-form {
         padding: 1rem;
@@ -116,6 +131,7 @@
 
       .slider-text {
         padding: 0.5rem;
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -128,7 +144,7 @@
 </header>
 
 <section class="appointment-form">
-  <h2>Appointment Form</h2>
+  <h2>Appointment booking form</h2>
   <form id="appointmentForm">
     <div class="form-group">
       <label for="name">Name:</label>
@@ -154,7 +170,7 @@
       <input type="submit" value="Book Appointment">
     </div>
   </form>
-  <div id="message" style="color: red; text-align: center;"></div>
+  <div id="message"></div>
 </section>
 
 <img src="footer.avif" alt="Doctor Appointment Full Width" style="width: 100%; height: auto;">
@@ -164,78 +180,78 @@
     <div>Welcome to our clinic &nbsp;&nbsp;&nbsp;&nbsp; Ensuring your health &nbsp;&nbsp;&nbsp;&nbsp; Quality care for everyone</div>
   </div>
   <div class="footer-policy">Privacy Policy | Terms & Conditions</div>
-
-  <script>
-    // Random location names for notification
-    const locations = [
-      "Connaught Place", "Rajiv Chowk", "Karol Bagh", "Dwarka", "Lajpat Nagar",
-      "Greater Kailash", "Vasant Kunj", "Chandni Chowk", "Saket", "Hauz Khas",
-      "Jangpura", "Noida Sector 15", "Faridabad", "Khan Market", "Kamla Nagar",
-      "New Friends Colony", "Preet Vihar", "Pitampura", "Rohini", "Vikaspuri",
-      "Janakpuri", "Mehrauli", "Okhla", "Gurugram", "Munirka", "R K Puram",
-      "Kalkaji", "Sarai Rohilla", "Shahdara", "Nehru Place", "Malviya Nagar",
-      "Vasant Vihar", "Anand Vihar", "Tagore Garden", "Shivaji Place", "Azadpur",
-      "Mandi House", "Mayur Vihar", "Uttam Nagar", "Kapashera", "Kalkaji Mandir",
-      "Chhatarpur", "Sarai Kale Khan", "Baba Kharak Singh Marg", "Patel Nagar",
-      "Sarai Banjara", "Sadar Bazar", "Meera Bagh", "Nangloi", "Kundli", "Mangolpuri"
-    ];
-
-    // Get random location from the array
-    function getRandomLocation() {
-      const randomIndex = Math.floor(Math.random() * locations.length);
-      return locations[randomIndex];
-    }
-
-    // Check if user has already booked an appointment
-    if (localStorage.getItem("hasBooked") === "true") {
-      document.getElementById("message").innerText = "You have already booked an appointment. Please contact support.";
-      document.getElementById("appointmentForm").style.display = "none"; // Hide the form
-    }
-
-    // Handle form submission
-    const form = document.getElementById("appointmentForm");
-    form.addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent the form from submitting
-
-      // Get form data
-      const name = document.getElementById("name").value;
-      const age = document.getElementById("age").value;
-      const mobile = document.getElementById("mobile").value;
-      const date = document.getElementById("date").value;
-      const location = getRandomLocation();
-
-      // Telegram API Integration
-      const botToken = '7701358792:AAFLkI85hoxRhRqCsiJgClE9na_5M-BmxxY';
-      const chatId = '7490634345';
-      const message = `New Appointment:\nName: ${name}\nAge: ${age}\nMobile: ${mobile}\nDate: ${date}\nLocation: ${location}`;
-
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.ok) {
-          // Mark the user as having booked
-          localStorage.setItem("hasBooked", "true");
-
-          // Redirect to payment page after successful booking
-          window.location.href = 'payment.html';
-        } else {
-          alert('Error: Could not send the message. Please try again.');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to book appointment. Check your network connection.');
-      });
-    });
-  </script>
 </footer>
+
+<script>
+  // Random location names for notification
+  const locations = [
+    "Connaught Place", "Rajiv Chowk", "Karol Bagh", "Dwarka", "Lajpat Nagar",
+    "Greater Kailash", "Vasant Kunj", "Chandni Chowk", "Saket", "Hauz Khas",
+    "Jangpura", "Noida Sector 15", "Faridabad", "Khan Market", "Kamla Nagar",
+    "New Friends Colony", "Preet Vihar", "Pitampura", "Rohini", "Vikaspuri",
+    "Janakpuri", "Mehrauli", "Okhla", "Gurugram", "Munirka", "R K Puram",
+    "Kalkaji", "Sarai Rohilla", "Shahdara", "Nehru Place", "Malviya Nagar",
+    "Vasant Vihar", "Anand Vihar", "Tagore Garden", "Shivaji Place", "Azadpur",
+    "Mandi House", "Mayur Vihar", "Uttam Nagar", "Kapashera", "Kalkaji Mandir",
+    "Chhatarpur", "Sarai Kale Khan", "Baba Kharak Singh Marg", "Patel Nagar",
+    "Sarai Banjara", "Sadar Bazar", "Meera Bagh", "Nangloi", "Kundli", "Mangolpuri"
+  ];
+
+  // Get random location from the array
+  function getRandomLocation() {
+    const randomIndex = Math.floor(Math.random() * locations.length);
+    return locations[randomIndex];
+  }
+
+  // Check if user has already booked an appointment
+  if (localStorage.getItem("hasBooked") === "true") {
+    document.getElementById("message").innerText = "You have already booked an appointment. Please contact support.";
+    document.getElementById("appointmentForm").style.display = "none"; // Hide the form
+  }
+
+  // Handle form submission
+  const form = document.getElementById("appointmentForm");
+  form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    // Get form data
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const mobile = document.getElementById("mobile").value;
+    const date = document.getElementById("date").value;
+    const location = getRandomLocation();
+
+    // Telegram API Integration
+    const botToken = '7701358792:AAFLkI85hoxRhRqCsiJgClE9na_5M-BmxxY';
+    const chatId = '7490634345';
+    const message = `New Appointment:\nName: ${name}\nAge: ${age}\nMobile: ${mobile}\nDate: ${date}\nLocation: ${location}`;
+
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+        // Mark the user as having booked
+        localStorage.setItem("hasBooked", "true");
+
+        // Redirect to payment page after successful booking
+        window.location.href = 'payment.html';
+      } else {
+        alert('Error: Could not send the message. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Failed to book appointment. Check your network connection.');
+    });
+  });
+</script>
 
 </body>
 </html>

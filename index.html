@@ -14,40 +14,35 @@
     }
 
     body {
-      background-color: #f9f9f9;
+      background-color: #f3f4f6;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
+      color: #333;
     }
 
-    /* Header section */
-    header {
-      display: none; /* Hide header */
-    }
-
-    header img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    /* Appointment form styles */
+    /* Appointment form container */
     .appointment-form {
-      margin: 2rem auto;
+      margin: 3rem auto;
       padding: 2rem;
-      background: white;
+      background: #ffffff;
       max-width: 500px;
       width: 90%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .appointment-form:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
     .appointment-form h2 {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      color: #007bff;
       text-align: center;
-      color: #333;
     }
 
     .form-group {
@@ -56,44 +51,62 @@
 
     .form-group label {
       display: block;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
       color: #555;
+      margin-bottom: 0.5rem;
     }
 
     .form-group input {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 0.9rem;
+      border: 2px solid #ccc;
+      border-radius: 8px;
       font-size: 1rem;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      border-color: #007bff;
+      outline: none;
     }
 
     .form-group input[type="submit"] {
       background-color: #007bff;
       color: white;
       border: none;
+      font-size: 1.1rem;
       cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s;
+      padding: 1rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
     }
 
     .form-group input[type="submit"]:hover {
       background-color: #0056b3;
     }
 
+    /* Error message */
     #message {
       color: red;
       text-align: center;
       font-size: 1.1rem;
+      margin-top: 1rem;
     }
 
     /* Footer styling */
     footer {
-      background: linear-gradient(90deg, #ff6f61, #ff7f50, #ff6347, #ff4500, #ff1493);
+      background: #ff6f61;
       color: white;
-      padding: 1rem;
+      padding: 2rem;
       text-align: center;
       margin-top: auto;
+      border-top: 5px solid #ff5f4f;
+    }
+
+    footer h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .footer-policy {
@@ -105,12 +118,12 @@
       display: flex;
       overflow: hidden;
       justify-content: center;
-      padding: 1rem;
-      font-size: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
     }
 
     .slider-text div {
-      animation: slideText 10s infinite linear;
+      animation: slideText 12s infinite linear;
       white-space: nowrap;
     }
 
@@ -126,12 +139,15 @@
     /* Responsive design */
     @media (max-width: 600px) {
       .appointment-form {
-        padding: 1rem;
+        padding: 1.5rem;
+      }
+
+      footer {
+        padding: 1.5rem;
       }
 
       .slider-text {
-        padding: 0.5rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
     }
   </style>
@@ -139,12 +155,12 @@
 <body>
 
 <header>
-  <h1>Book Your Doctor Appointment</h1>
-  <img src="pnb.jpg" alt="Doctor Appointment Banner">
+
+  <img src="pnb.jpg" alt="Doctor Appointment Banner" style="width: 100%; height: auto;">
 </header>
 
 <section class="appointment-form">
-  <h2>Appointment booking form</h2>
+  <h2>Book an Appointment</h2>
   <form id="appointmentForm">
     <div class="form-group">
       <label for="name">Name:</label>
